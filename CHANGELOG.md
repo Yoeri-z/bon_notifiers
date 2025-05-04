@@ -4,3 +4,5 @@
  - Added AsyncListenable Interface
  - Added AsyncListenableBuilder
  - Wrote tests testing AsyncNotifier and AsyncListenableBuilder
+ - Added ErrorMixin
+ - Added LoadingMixin
