@@ -1,8 +1,8 @@
 # bon_notifiers
 
-`bon_notifiers` is a collection of custom notifiers and mixins that I use in my projects. This package provides various utilities to handle state management in Flutter applications, focusing on `AsyncListenable` and `AsyncNotifier` implementations, as well as builders for reactive UI updates.
+`bon_notifiers` is a collection of custom notifiers and mixins that I use in my projects. This package provides various utilities to extend on flutters Notifier principle. Primarily focussing on handling asynchronous operations with less boilerplates.
 
-Everything in this package is well-documented to help you integrate it into your projects easily.
+For a full statemanagement solution you can bundle this package with provider and flutters default notifiers.
 
 ## Features
 
@@ -92,3 +92,51 @@ AsyncListenableBuilder<String>(
   child: Text('This is a static widget'),
 )
 ```
+
+### Error Mixin
+The error mixin can be used as follows:
+```dart
+class MyErrorNotifier extends ChangeNotifier with ErrorNotifier {
+  // A method to simulate fetching data and setting an error
+  void fetchData() {
+    try {
+      throw Exception("Data fetch failed");
+    } catch (error) {
+      setError(error);  // Sets error using ErrorNotifier
+    }
+  }
+}
+
+final notifier = MyErrorNotifier();
+
+//The mixin exposes hasError and error getters
+if(notifier.hasError){
+    print(notifier.error);
+}
+```
+### Loading mixin
+The loading mixin can be used as follows:
+```dart
+class MyLoadingNotifier extends ChangeNotifier with LoadingNotifier {
+  // A method to simulate data loading process
+  void fetchData() {
+    setLoading();  // Starts the loading state using LoadingNotifier
+
+    // Simulating data fetch
+    Future.delayed(Duration(seconds: 2), () {
+      setNotLoading();  // Ends the loading state once data is fetched
+      notifyListeners();
+    });
+  }
+}
+
+final notifier = MyErrorNotifier();
+
+//The mixin exposes a loading boolean flag
+print(notifier.isLoading);
+```
+
+Everything public class and method in this package is documented, so for more documentation you can go to the sourcecode
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
