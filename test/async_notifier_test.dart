@@ -46,10 +46,21 @@ void main() {
       expect(notifier.result, equals(4));
     });
 
-    test('update throws when not initialized', () {
+    test('update throws in debug mode if called before set', () {
       final notifier = AsyncNotifier<int>();
+      bool didThrow = false;
 
-      expect(() => notifier.update((v) => v * 2), throwsException);
+      assert(() {
+        try {
+          notifier.update((value) => value + 1);
+        } catch (e) {
+          didThrow = true;
+          expect(e, isA<BonError>());
+        }
+        return true;
+      }());
+
+      expect(didThrow, true);
     });
 
     test('update triggers warnCallback when error present', () {
