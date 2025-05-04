@@ -1,23 +1,14 @@
 # bon_notifiers
 
-`bon_notifiers` is a collection of custom notifiers and mixins that I use in my projects. This package provides various utilities to extend on flutters Notifier principle. Primarily focussing on handling asynchronous operations with less boilerplates.
+`bon_notifiers` is a collection of custom notifiers and mixins that I use in my projects. This package provides various utilities to extend on flutters Notifier principle. Primarily focussing on handling asynchronous operations with less boilerplate.
 
 For a full statemanagement solution you can bundle this package with provider and flutters default notifiers.
 
 ## Features
 
-- `AsyncNotifier<T>`: A state management solution for asynchronous values with loading, error, and result states.
+- `AsyncNotifier<T>`: A notifier taylored for handling asynchronous data.
 - `AsyncListenableBuilder<T>`: A widget that listens to `AsyncListenable` and rebuilds based on the state changes.
 - `mixins`: Reusable functionality for handling different states like loading, error, and result in your custom notifiers.
-
-## Installation
-
-Add `bon_notifiers` as a dependency in your `pubspec.yaml`:
-
-```yaml
-dependencies:
-  bon_notifiers: ^0.0.1
-```
 
 ## Example usage
 ### Async Notifier
@@ -34,7 +25,7 @@ notifier.update((result) => result + ' updated');
 // Set error
 notifier.setError('Something went wrong');
 
-// Check state
+// Check flags
 if (notifier.isLoading) {
   // Show loading indicator
 } else if (notifier.hasError) {

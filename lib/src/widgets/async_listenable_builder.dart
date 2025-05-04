@@ -1,7 +1,6 @@
 // ignore_for_file: null_check_on_nullable_type_parameter
 
 import 'package:bon_notifiers/bon_notifiers.dart';
-import 'package:bon_notifiers/src/interfaces/async_listenable.dart';
 import 'package:flutter/material.dart';
 
 /// Signature for building a widget from a successful result.

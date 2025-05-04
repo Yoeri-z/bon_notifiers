@@ -1,3 +1,6 @@
+# 0.0.2
+ - Added debug BonError
+
 ## 0.0.1
 
  - Added AsyncNotifier
