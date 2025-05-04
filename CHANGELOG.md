@@ -1,3 +1,6 @@
+# 0.0.3
+ - Updated exports
+
 # 0.0.2
  - Added debug BonError
 
