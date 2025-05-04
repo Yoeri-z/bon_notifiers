@@ -1,5 +1,6 @@
 // ignore_for_file: null_check_on_nullable_type_parameter
 
+import 'package:bon_notifiers/bon_notifiers.dart';
 import 'package:bon_notifiers/src/interfaces/async_listenable.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class AsyncListenableBuilder<T> extends StatefulWidget {
     required this.asyncListenable,
     required this.resultBuilder,
     required this.errorBuilder,
-    this.loadingWidget,
+    this.loadingIndicator,
     this.child,
   });
 
@@ -35,8 +36,8 @@ class AsyncListenableBuilder<T> extends StatefulWidget {
 
   /// A widget that is displayed when the [asyncListenable] is loading.
   ///
-  /// If no [loadingWidget] is provided, a default [CircularProgressIndicator.adaptive] is shown.
-  final Widget? loadingWidget;
+  /// If no [loadingIndicator] is provided, a default [CircularProgressIndicator.adaptive] is shown.
+  final Widget? loadingIndicator;
 
   /// A widget that is passed unchanged to the [resultBuilder] and [errorBuilder].
   ///
@@ -93,7 +94,7 @@ class _AsyncListenableBuilderState<T> extends State<AsyncListenableBuilder<T>> {
       return widget.errorBuilder(context, listenable.error!, widget.child);
     }
     if (listenable.isLoading) {
-      return widget.loadingWidget ??
+      return widget.loadingIndicator ??
           const CircularProgressIndicator.adaptive(
             constraints: BoxConstraints(maxHeight: 40, maxWidth: 40),
           );
