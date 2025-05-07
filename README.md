@@ -60,7 +60,9 @@ class ComplexAsyncNotifier extends AsyncNotifier<Data> {
   void editName(String newName) {
     setLoading();
     try{
-      update((data) => data.copyWith(name: newName))
+      update((data) async {
+        return await repo.updateData(data.copyWith(name: newName));
+      });
     }
     catch(e){
       setError(e);
