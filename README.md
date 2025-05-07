@@ -57,15 +57,21 @@ class ComplexAsyncNotifier extends AsyncNotifier<Data> {
     }
   }
   //add custom methods
-  void swap(Data newData) {
-    set(newData);
+  void editName(String newName) {
+    setLoading();
+    try{
+      update((data) => data.copyWith(name: newName))
+    }
+    catch(e){
+      setError(e);
+    }
   }
 }
 
 final complexNotifier = ComplexAsyncNotifier();
 
 // Using extended functionality
-complexNotifier.swap();
+complexNotifier.editName('Alice');
 ```
 
 ### AsyncListenableBuilder
