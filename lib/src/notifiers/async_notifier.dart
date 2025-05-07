@@ -1,7 +1,7 @@
 // ignore_for_file: null_check_on_nullable_type_parameter
 
 import 'package:bon_notifiers/bon_notifiers.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 /// A concrete implementation of [AsyncListenable].
 ///
@@ -69,13 +69,12 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
       notifyListeners();
       return;
     }
-    assert(() {
-      throw BonError(
-        message:
-            '[update] was called before a result value was set; make sure the [AsyncNotifier] has '
-            'a value by passing the first value you retrieve to [set] instead of [update].',
+    if (kDebugMode) {
+      debugPrint(
+        'Called [update] before an initial value was set in $runtimeType, '
+        'use [set] to set an initial value, if this is intended behaviour you can ignore this warning',
       );
-    }());
+    }
   }
 
   /// Sets the result to [value] and notifies listeners.

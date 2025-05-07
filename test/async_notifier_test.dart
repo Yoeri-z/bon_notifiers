@@ -46,23 +46,6 @@ void main() {
       expect(notifier.result, equals(4));
     });
 
-    test('update throws in debug mode if called before set', () {
-      final notifier = AsyncNotifier<int>();
-      bool didThrow = false;
-
-      assert(() {
-        try {
-          notifier.update((value) => value + 1);
-        } catch (e) {
-          didThrow = true;
-          expect(e, isA<BonError>());
-        }
-        return true;
-      }());
-
-      expect(didThrow, true);
-    });
-
     test('update triggers warnCallback when error present', () {
       final notifier = AsyncNotifier<int>();
       final error = Exception('fail');
