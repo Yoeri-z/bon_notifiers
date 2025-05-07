@@ -8,7 +8,7 @@ typedef AsyncListenableResultBuilder<T> =
     Widget Function(BuildContext context, T result, Widget? child);
 
 /// Signature for building a widget from an error.
-typedef AsyncListenableErrorBuilder<T> =
+typedef AsyncListenableErrorBuilder =
     Widget Function(BuildContext context, Object error, Widget? child);
 
 /// A widget that builds itself based on the state of an [AsyncListenable].
