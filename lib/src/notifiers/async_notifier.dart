@@ -57,8 +57,10 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
   ///
   /// If you're unsure whether the [AsyncNotifier] has a result at this point, use [set] instead.
   void update(ResultUpdateFunction<T> updater, [WarnFunction? warnCallback]) {
-    if (hasError && warnCallback != null) {
-      warnCallback(error!);
+    if (hasError) {
+      if (warnCallback != null) {
+        warnCallback(error!);
+      }
       return;
     }
     if (hasResult) {
