@@ -120,7 +120,6 @@ class MyLoadingNotifier extends ChangeNotifier with LoadingNotifier {
     // Simulating data fetch
     Future.delayed(Duration(seconds: 2), () {
       setNotLoading();  // Ends the loading state once data is fetched
-      notifyListeners();
     });
   }
 }
