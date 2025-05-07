@@ -16,11 +16,8 @@ Using asyncnotifier as an object
 ```dart
 final notifier = AsyncNotifier<String>();
 
-// Set initial value
-notifier.set('Initial data');
-
-// Update value
-notifier.update((result) => result + ' updated');
+// Set value
+notifier.set('Data');
 
 // Set error
 notifier.setError('Something went wrong');
@@ -60,9 +57,8 @@ class ComplexAsyncNotifier extends AsyncNotifier<Data> {
   void editName(String newName) {
     setLoading();
     try{
-      update((data) async {
-        return await repo.updateData(data.copyWith(name: newName));
-      });
+      final data = await repo.update(result!.copyWith(name: newName));
+      set(data);
     }
     catch(e){
       setError(e);

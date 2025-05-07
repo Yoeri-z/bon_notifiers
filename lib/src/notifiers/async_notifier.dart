@@ -50,33 +50,6 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
     notifyListeners();
   }
 
-  /// Updates the current result using the provided [updater] function.
-  ///
-  /// If an error exists and [warnCallback] is provided, it will be called with the error.
-  /// Throws if called before the notifier has been initialized with a result.
-  ///
-  /// If you're unsure whether the [AsyncNotifier] has a result at this point, use [set] instead.
-  void update(ResultUpdateFunction<T> updater, [WarnFunction? warnCallback]) {
-    if (hasError) {
-      if (warnCallback != null) {
-        warnCallback(error!);
-      }
-      return;
-    }
-    if (hasResult) {
-      _result = updater(result!);
-      _loading = false;
-      notifyListeners();
-      return;
-    }
-    if (kDebugMode) {
-      debugPrint(
-        'Called [update] before an initial value was set in $runtimeType, '
-        'use [set] to set an initial value, if this is intended behaviour you can ignore this warning',
-      );
-    }
-  }
-
   /// Sets the result to [value] and notifies listeners.
   ///
   /// This will clear any previous errors and overwrite the existing result.

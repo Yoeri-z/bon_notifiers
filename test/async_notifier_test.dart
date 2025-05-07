@@ -39,24 +39,6 @@ void main() {
       expect(notified, isTrue);
     });
 
-    test('update modifies existing result', () {
-      final notifier = AsyncNotifier<int>(value: 2);
-      notifier.update((val) => val * 2);
-
-      expect(notifier.result, equals(4));
-    });
-
-    test('update triggers warnCallback when error present', () {
-      final notifier = AsyncNotifier<int>();
-      final error = Exception('fail');
-      Object? caught;
-      notifier.setError(error);
-
-      notifier.update((v) => v, (e) => caught = e);
-
-      expect(caught, equals(error));
-    });
-
     test('set new value clears error', () {
       final notifier = AsyncNotifier<String>();
       notifier.setError('crash');
