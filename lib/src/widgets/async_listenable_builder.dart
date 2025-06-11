@@ -93,10 +93,13 @@ class _AsyncListenableBuilderState<T> extends State<AsyncListenableBuilder<T>> {
       return widget.errorBuilder(context, listenable.error!, widget.child);
     }
     if (listenable.isLoading) {
-      return widget.loadingIndicator ??
-          const CircularProgressIndicator.adaptive(
-            constraints: BoxConstraints(maxHeight: 40, maxWidth: 40),
-          );
+      return SizedBox(
+        height: 40,
+        width: 40,
+        child:
+            widget.loadingIndicator ??
+            const CircularProgressIndicator.adaptive(),
+      );
     }
 
     assert(
