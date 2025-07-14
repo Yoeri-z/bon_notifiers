@@ -20,7 +20,7 @@ final notifier = AsyncNotifier<String>();
 notifier.set('Data');
 
 // Set error
-notifier.setError('Something went wrong');
+notifier.setError('Something went wrong', error);
 
 // Check flags
 if (notifier.isLoading) {
@@ -50,7 +50,7 @@ class ComplexAsyncNotifier extends AsyncNotifier<Data> {
         set(result);
     }
     catch(e){
-        setError(e);
+        setError('Failed fetch data', error);
     }
   }
   //add custom methods
@@ -60,8 +60,8 @@ class ComplexAsyncNotifier extends AsyncNotifier<Data> {
       final data = await repo.update(result!.copyWith(name: newName));
       set(data);
     }
-    catch(e){
-      setError(e);
+    catch(error, stackTrace){
+      setError('Failed to update data' ,error);
     }
   }
 }
@@ -71,6 +71,7 @@ final complexNotifier = ComplexAsyncNotifier();
 // Using extended functionality
 complexNotifier.editName('Alice');
 ```
+
 
 ### AsyncListenableBuilder
 ```dart
@@ -97,7 +98,7 @@ class MyErrorNotifier extends ChangeNotifier with ErrorNotifier {
     try {
       throw Exception("Data fetch failed");
     } catch (error) {
-      setError(error);  // Sets error using ErrorNotifier
+      setError('Failed to fetch data', error);
     }
   }
 }
@@ -130,7 +131,21 @@ final notifier = MyErrorNotifier();
 print(notifier.isLoading);
 ```
 
-Everything public class and method in this package is documented, so for more documentation you can go to the sourcecode
+### Listening for errors:
+The AsyncNotifier class exposes a listener that can be added to handle or log errors from one place.
+```dart
+AsyncListenable.errorListener =  (message, notifier, error, stackTrace){
+  //log errors from one place so we dont have to put logger calls in every notifier
+ logger.e(
+    '$message in ${notifier.runtimeType}', 
+    error: error, 
+    stackTrace:  stackTrace
+ );
+}
+```
+This method will be called any time an error occurs in either an `AsyncNotifier` or a `ChangeNotifier` with the `ErrorNotifier` mixin
+
+Every public class and method in this package is documented, so for more documentation you can go to the sourcecode
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.

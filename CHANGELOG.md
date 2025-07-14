@@ -1,3 +1,6 @@
+# 0.0.4
+ - made `AsyncNotifier` and `ErrorNotifier` setError methods take the same arguments
+ - added static `errorListener` to `AsyncNotifier`
 # 0.0.3
  - Updated exports
 

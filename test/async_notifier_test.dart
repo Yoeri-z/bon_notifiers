@@ -32,7 +32,7 @@ void main() {
       notifier.addListener(() => notified = true);
 
       final error = Exception('fail');
-      notifier.setError(error);
+      notifier.setError('fail', error, StackTrace.current);
 
       expect(notifier.hasError, isTrue);
       expect(notifier.error, equals(error));
@@ -41,7 +41,7 @@ void main() {
 
     test('set new value clears error', () {
       final notifier = AsyncNotifier<String>();
-      notifier.setError('crash');
+      notifier.setError('crash', 'crash', StackTrace.current);
       expect(notifier.hasError, isTrue);
 
       notifier.set('new value');

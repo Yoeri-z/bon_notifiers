@@ -1,6 +1,6 @@
 name: bon_notifiers
 description: "A collection of custom notifiers and notifier mixins that i use in my projects"
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/Yoeri-z/bon_notifiers
 
 environment:
