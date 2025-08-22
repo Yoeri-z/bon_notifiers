@@ -44,8 +44,8 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
   /// Sets an [error] and notifies listeners.
   void setError(String message, Object error, [StackTrace? st]) {
     _error = error;
-    if (errorListener != null) {
-      errorListener!(message, error, this, st);
+    if (AsyncListenable.errorListener != null) {
+      AsyncListenable.errorListener!(message, error, this, st);
     }
     notifyListeners();
   }
@@ -66,12 +66,4 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
     _loading = false;
     notifyListeners();
   }
-
-  static void Function(
-    String message,
-    Object error,
-    ChangeNotifier notifier,
-    StackTrace? stackTrace,
-  )?
-  errorListener;
 }

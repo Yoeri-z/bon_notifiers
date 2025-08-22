@@ -30,4 +30,12 @@ abstract interface class AsyncListenable<T> extends Listenable {
 
   /// The error that occurred, if any. `null` if no error occurred.
   Object? get error;
+
+  static void Function(
+    String message,
+    Object error,
+    ChangeNotifier notifier,
+    StackTrace? stackTrace,
+  )?
+  errorListener;
 }

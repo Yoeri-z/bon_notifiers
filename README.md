@@ -132,7 +132,7 @@ print(notifier.isLoading);
 ```
 
 ### Listening for errors:
-The AsyncNotifier class exposes a listener that can be added to handle or log errors from one place.
+The AsyncListenable class exposes a listener that can be added to handle or log errors from one place.
 ```dart
 AsyncListenable.errorListener =  (message, notifier, error, stackTrace){
   //log errors from one place so we dont have to put logger calls in every notifier
@@ -145,7 +145,6 @@ AsyncListenable.errorListener =  (message, notifier, error, stackTrace){
 ```
 This method will be called any time an error occurs in either an `AsyncNotifier` or a `ChangeNotifier` with the `ErrorNotifier` mixin
 
-Every public class and method in this package is documented, so for more documentation you can go to the sourcecode
-
+Every public class and method in this package is documented, for more documentation see [the api reference](https://pub.dev/documentation/bon_notifiers/latest/bon_notifiers/)
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
