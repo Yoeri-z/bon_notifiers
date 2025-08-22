@@ -8,6 +8,12 @@ import 'package:flutter/foundation.dart';
 /// Manages the state of an asynchronous value of type [T], including loading,
 /// result, and error states. Notifies listeners on updates.
 class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
+  Object? _error;
+
+  T? _result;
+
+  bool _loading = true;
+
   /// Creates an [AsyncNotifier] with an optional initial [value].
   ///
   /// If [value] is provided, the notifier starts in a non-loading state.
@@ -17,15 +23,11 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
     }
   }
 
-  Object? _error;
-
   @override
   Object? get error => _error;
 
   @override
   bool get hasError => error != null;
-
-  T? _result;
 
   @override
   bool get hasResult => _result != null;
@@ -33,7 +35,8 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
   @override
   T? get result => _result;
 
-  bool _loading = true;
+  @override
+  T get requireResult => result!;
 
   @override
   bool get isLoading => _loading;

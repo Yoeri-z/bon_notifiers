@@ -25,6 +25,9 @@ abstract interface class AsyncListenable<T> extends Listenable {
   /// The current result, if available. May be `null` if not yet loaded or if an error occurred.
   T? get result;
 
+  /// The current result, fails if it is not available.
+  T get requireResult;
+
   /// The error that occurred, if any. `null` if no error occurred.
   Object? get error;
 }

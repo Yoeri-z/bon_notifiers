@@ -1,5 +1,3 @@
-// ignore_for_file: null_check_on_nullable_type_parameter
-
 import 'package:bon_notifiers/bon_notifiers.dart';
 import 'package:flutter/material.dart';
 
@@ -93,22 +91,33 @@ class _AsyncListenableBuilderState<T> extends State<AsyncListenableBuilder<T>> {
       return widget.errorBuilder(context, listenable.error!, widget.child);
     }
     if (listenable.isLoading) {
+      return widget.loadingIndicator ??
+          SizedBox(
+            height: 40,
+            width: 40,
+            child: const CircularProgressIndicator.adaptive(),
+          );
+    }
+
+    if (!listenable.hasResult) {
+      assert(
+        listenable.hasResult,
+        'AsyncListenable reached an impossible state: there is no error, it is not loading, and it has no result.\n'
+        'If you are using AsyncNotifier, this should never happen.\n'
+        'If you implemented your own AsyncListenable, make sure it always reflects one of the three valid states.',
+      );
+
       return SizedBox(
         height: 40,
         width: 40,
-        child:
-            widget.loadingIndicator ??
-            const CircularProgressIndicator.adaptive(),
+        child: const CircularProgressIndicator.adaptive(),
       );
     }
 
-    assert(
-      listenable.hasResult,
-      'AsyncListenable reached an impossible state: there is no error, it is not loading, and it has no result.\n'
-      'If you are using AsyncNotifier, this should never happen.\n'
-      'If you implemented your own AsyncListenable, make sure it always reflects one of the three valid states.',
+    return widget.resultBuilder(
+      context,
+      listenable.requireResult,
+      widget.child,
     );
-
-    return widget.resultBuilder(context, listenable.result!, widget.child);
   }
 }
