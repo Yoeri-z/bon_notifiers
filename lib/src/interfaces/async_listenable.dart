@@ -1,9 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-/// A function that takes the current result of type [T] and returns an updated result.
-/// Useful for performing transformations or updates in a functional style.
-typedef ResultUpdateFunction<T> = T Function(T result);
-
 /// A function that handles warnings or errors.
 /// Receives an [Object] representing the error.
 typedef WarnFunction = void Function(Object error);
@@ -36,6 +32,5 @@ abstract interface class AsyncListenable<T> extends Listenable {
     Object error,
     ChangeNotifier notifier,
     StackTrace stackTrace,
-  )?
-  errorListener;
+  )? errorListener;
 }

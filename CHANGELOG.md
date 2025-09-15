@@ -1,3 +1,6 @@
+# 1.1.1
+ - removed `ResultUpdateFunction<T>` typedef as it is replaced by `ActionCallback<T>` typedef.
+
 # 1.1.0
  - made message optional, to allow for not logging every single message
  - made stacktrace parameter in errorListener callback non-nullable.
