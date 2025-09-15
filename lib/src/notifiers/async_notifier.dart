@@ -1,7 +1,10 @@
-// ignore_for_file: null_check_on_nullable_type_parameter
+import 'dart:async';
 
 import 'package:bon_notifiers/bon_notifiers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+
+typedef ActionCallback<T> = FutureOr<T> Function(T value);
 
 /// A concrete implementation of [AsyncListenable].
 ///
@@ -42,17 +45,24 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
   bool get isLoading => _loading;
 
   /// Sets an [error] and notifies listeners.
-  void setError(String message, Object error, [StackTrace? st]) {
+  void setError(Object error, {String? message, StackTrace? stackTrace}) {
     _error = error;
-    if (AsyncListenable.errorListener != null) {
-      AsyncListenable.errorListener!(message, error, this, st);
+    if (message != null) {
+      AsyncListenable.errorListener?.call(
+        message,
+        error,
+        this,
+        stackTrace ?? StackTrace.current,
+      );
     }
+
     notifyListeners();
   }
 
   /// Marks the notifier as loading and notifies listeners.
   void setLoading() {
     _loading = true;
+
     notifyListeners();
   }
 
@@ -64,6 +74,33 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
     _result = value;
     _error = null;
     _loading = false;
+
     notifyListeners();
+  }
+
+  ///Sets the result to be the returned value of [action].
+  ///The notifier will automatically enter a loading state for the duration of [action].
+  ///If [action] fails, [error] will be set automatically.
+  ///
+  /// An error message can be set in [errorMessage].
+  ///
+  /// To disable the notifier entering loading state, set [autoSetLoading] to false
+  ///
+  /// To make the update function run if a result is available regardless of errors, set [ignoreErrors] to true.
+  Future<void> update(
+    ActionCallback<T> action, {
+    String? errorMessage,
+    bool autoSetLoading = true,
+  }) async {
+    if (!hasResult || hasError) return;
+    if (autoSetLoading) setLoading();
+
+    _error = null;
+    try {
+      final result = await action(requireResult);
+      set(result);
+    } catch (e, st) {
+      setError(e, stackTrace: st, message: errorMessage);
+    }
   }
 }

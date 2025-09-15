@@ -1,10 +1,10 @@
 name: bon_notifiers
 description: "A collection of custom notifiers and notifier mixins"
-version: 1.0.0
+version: 1.1.0
 repository: https://github.com/Yoeri-z/bon_notifiers
 
 environment:
-  sdk: ^3.7.2
+  sdk: ^3.0.0
   flutter: ">=1.17.0"
 
 dependencies:

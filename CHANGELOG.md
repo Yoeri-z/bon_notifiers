@@ -1,3 +1,8 @@
+# 1.1.0
+ - made message optional, to allow for not logging every single message
+ - made stacktrace parameter in errorListener callback non-nullable.
+ - added update method to `AsyncNotifier`.
+ - changed min dart sdk version down to 3.0
 # 1.0.0
  - made custom loading indicator not constraint in a 40 x 40 box.
  - added requireResult getter to `AsyncListenable` interface, added implementation to `AsynNotifier`

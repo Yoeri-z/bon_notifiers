@@ -12,10 +12,15 @@ mixin ErrorNotifier on ChangeNotifier {
   bool get hasError => _error != null;
 
   /// Sets the error state and notifies listeners.
-  void setError(String message, Object error, [StackTrace? stackTrace]) {
+  void setError(Object error, {String? message, StackTrace? stackTrace}) {
     _error = error;
-    if (AsyncListenable.errorListener != null) {
-      AsyncListenable.errorListener!(message, error, this, stackTrace);
+    if (message != null) {
+      AsyncListenable.errorListener?.call(
+        message,
+        error,
+        this,
+        stackTrace ?? StackTrace.current,
+      );
     }
     notifyListeners();
   }

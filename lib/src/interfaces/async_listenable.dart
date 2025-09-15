@@ -35,7 +35,7 @@ abstract interface class AsyncListenable<T> extends Listenable {
     String message,
     Object error,
     ChangeNotifier notifier,
-    StackTrace? stackTrace,
+    StackTrace stackTrace,
   )?
   errorListener;
 }

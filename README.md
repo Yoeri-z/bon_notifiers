@@ -14,13 +14,20 @@ For a full statemanagement solution you can bundle this package with provider an
 ### Async Notifier
 Using asyncnotifier as an object
 ```dart
-final notifier = AsyncNotifier<String>();
+final notifier = AsyncNotifier<int>();
+
+// Set loading
+notifier.setLoading();
 
 // Set value
-notifier.set('Data');
+notifier.set(0);
 
 // Set error
-notifier.setError('Something went wrong', error);
+notifier.setError(error);
+
+// Null safe update value
+notifier.update((value) => value+1)
+
 
 // Check flags
 if (notifier.isLoading) {
@@ -55,14 +62,13 @@ class ComplexAsyncNotifier extends AsyncNotifier<Data> {
   }
   //add custom methods
   void editName(String newName) {
-    setLoading();
-    try{
-      final data = await repo.update(result!.copyWith(name: newName));
-      set(data);
-    }
-    catch(error, stackTrace){
-      setError('Failed to update data' ,error);
-    }
+    update(
+      (value) => repo.update(
+          value.copyWith(name: newName),
+          errorMessage: 'Failed to edit name'
+        )
+    );
+
   }
 }
 
@@ -98,7 +104,7 @@ class MyErrorNotifier extends ChangeNotifier with ErrorNotifier {
     try {
       throw Exception("Data fetch failed");
     } catch (error) {
-      setError('Failed to fetch data', error);
+      setError(error, message: 'Failed to fetch data');
     }
   }
 }
@@ -142,8 +148,9 @@ AsyncListenable.errorListener =  (message, notifier, error, stackTrace){
     stackTrace:  stackTrace
  );
 }
+
 ```
-This method will be called any time an error occurs in either an `AsyncNotifier` or a `ChangeNotifier` with the `ErrorNotifier` mixin
+This method will be called any time `setError` or `update` is called with a value in the message parameter.
 
 Every public class and method in this package is documented, for more documentation see [the api reference](https://pub.dev/documentation/bon_notifiers/latest/bon_notifiers/)
 ## License

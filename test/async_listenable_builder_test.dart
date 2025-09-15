@@ -37,7 +37,11 @@ void main() {
 
   testWidgets('shows error when set', (tester) async {
     final notifier = AsyncNotifier<String>();
-    notifier.setError('crash', 'crash', StackTrace.current);
+    notifier.setError(
+      'crash',
+      stackTrace: StackTrace.current,
+      message: 'crash',
+    );
 
     await tester.pumpWidget(
       MaterialApp(
