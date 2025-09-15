@@ -57,7 +57,7 @@ class ComplexAsyncNotifier extends AsyncNotifier<Data> {
         set(result);
     }
     catch(e){
-        setError('Failed fetch data', error);
+        setError(error, message: 'Failed to fetch data');
     }
   }
   //add custom methods

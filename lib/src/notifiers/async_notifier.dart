@@ -85,8 +85,6 @@ class AsyncNotifier<T> extends ChangeNotifier implements AsyncListenable<T> {
   /// An error message can be set in [errorMessage].
   ///
   /// To disable the notifier entering loading state, set [autoSetLoading] to false
-  ///
-  /// To make the update function run if a result is available regardless of errors, set [ignoreErrors] to true.
   Future<void> update(
     ActionCallback<T> action, {
     String? errorMessage,
