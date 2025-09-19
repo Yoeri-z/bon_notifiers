@@ -1,3 +1,12 @@
+# 2.0.0
+ - changed `AsyncNotifier` to `AsyncValueNotifier`
+ - changed `AsyncListener` interface to not include results
+ - The new `AsyncNotifier` is now more similar to change notifier, but with loading and error properties.
+ - Added new AsyncValueListenableBuilder for AsyncValueNotifier.
+ - added new runFuture methods to both async notifiers
+ - changed [result] to [data].
+ - added BusyMixin
+
 # 1.1.1
  - removed `ResultUpdateFunction<T>` typedef as it is replaced by `ActionCallback<T>` typedef.
 

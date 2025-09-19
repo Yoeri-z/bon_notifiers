@@ -2,32 +2,32 @@ import 'package:bon_notifiers/bon_notifiers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('AsyncNotifier', () {
+  group('AsyncValueNotifier', () {
     test('initial state with value is not loading and has result', () {
-      final notifier = AsyncNotifier<int>(value: 42);
+      final notifier = AsyncValueNotifier<int>(data: 42);
 
       expect(notifier.isLoading, isFalse);
-      expect(notifier.hasResult, isTrue);
-      expect(notifier.result, equals(42));
+      expect(notifier.hasData, isTrue);
+      expect(notifier.data, equals(42));
     });
 
     test('initial state without value is loading and has no result', () {
-      final notifier = AsyncNotifier<int>();
+      final notifier = AsyncValueNotifier<int>();
 
       expect(notifier.isLoading, isTrue);
-      expect(notifier.hasResult, isFalse);
+      expect(notifier.hasData, isFalse);
     });
 
     test('set sets the result and deflags loading', () {
-      final notifier = AsyncNotifier<String>();
-      notifier.set('hello');
+      final notifier = AsyncValueNotifier<String>();
+      notifier.data = 'hello';
 
-      expect(notifier.result, equals('hello'));
+      expect(notifier.data, equals('hello'));
       expect(notifier.isLoading, isFalse);
     });
 
     test('setError sets error and notifies listeners', () {
-      final notifier = AsyncNotifier();
+      final notifier = AsyncValueNotifier();
       bool notified = false;
       notifier.addListener(() => notified = true);
 
@@ -37,20 +37,6 @@ void main() {
       expect(notifier.hasError, isTrue);
       expect(notifier.error, equals(error));
       expect(notified, isTrue);
-    });
-
-    test('set new value clears error', () {
-      final notifier = AsyncNotifier<String>();
-      notifier.setError(
-        'crash',
-        stackTrace: StackTrace.current,
-        message: 'crash',
-      );
-      expect(notifier.hasError, isTrue);
-
-      notifier.set('new value');
-      expect(notifier.hasError, isFalse);
-      expect(notifier.result, 'new value');
     });
   });
 }

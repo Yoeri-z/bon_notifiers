@@ -1,32 +1,28 @@
-import 'package:bon_notifiers/src/interfaces/async_listenable.dart';
+import 'package:bon_notifiers/bon_notifiers.dart';
 import 'package:flutter/material.dart';
 
-/// Signature for building a widget from a succesfull async listenable.
-typedef AsyncBuilder<T extends AsyncListenable> = Widget Function(
+/// Signature for building a widget from a successful result.
+typedef AsyncListenableResultBuilder<T> = Widget Function(
     BuildContext context, T result, Widget? child);
-
-/// Signature for building a widget from an error.
-typedef ErrorBuilder = Widget Function(
-    BuildContext context, Object error, Widget? child);
 
 /// A widget that builds itself based on the state of an [AsyncListenable].
 ///
 /// It handles loading, error, and result states using the provided builder functions.
-class AsyncListenableBuilder<T extends AsyncListenable> extends StatefulWidget {
-  const AsyncListenableBuilder({
+class AsyncValueListenableBuilder<T> extends StatefulWidget {
+  const AsyncValueListenableBuilder({
     super.key,
     required this.asyncListenable,
-    required this.builder,
+    required this.resultBuilder,
     required this.errorBuilder,
     this.loadingIndicator,
     this.child,
   });
 
-  /// The [AsyncListenable] to listen to for updates.
-  final T asyncListenable;
+  /// The [AsyncValueListenable] to listen to for updates.
+  final AsyncValueListenable<T> asyncListenable;
 
   /// Called when [asyncListenable] has a result.
-  final AsyncBuilder<T> builder;
+  final AsyncListenableResultBuilder<T> resultBuilder;
 
   /// Called when [asyncListenable] has an error.
   final ErrorBuilder errorBuilder;
@@ -36,7 +32,7 @@ class AsyncListenableBuilder<T extends AsyncListenable> extends StatefulWidget {
   /// If no [loadingIndicator] is provided, a default [CircularProgressIndicator.adaptive] is shown.
   final Widget? loadingIndicator;
 
-  /// A widget that is passed unchanged to the [builder] and [errorBuilder].
+  /// A widget that is passed unchanged to the [resultBuilder] and [errorBuilder].
   ///
   /// This allows preserving static parts of the widget tree that do not depend on the result
   /// or error, improving performance and readability.
@@ -53,13 +49,13 @@ class AsyncListenableBuilder<T extends AsyncListenable> extends StatefulWidget {
   final Widget? child;
 
   @override
-  State<AsyncListenableBuilder<T>> createState() =>
-      _AsyncListenableBuilderState<T>();
+  State<AsyncValueListenableBuilder<T>> createState() =>
+      _AsyncValueListenableBuilderState<T>();
 }
 
-class _AsyncListenableBuilderState<T extends AsyncListenable>
-    extends State<AsyncListenableBuilder<T>> {
-  T get listenable => widget.asyncListenable;
+class _AsyncValueListenableBuilderState<T>
+    extends State<AsyncValueListenableBuilder<T>> {
+  AsyncValueListenable<T> get listenable => widget.asyncListenable;
 
   @override
   void initState() {
@@ -68,7 +64,7 @@ class _AsyncListenableBuilderState<T extends AsyncListenable>
   }
 
   @override
-  void didUpdateWidget(AsyncListenableBuilder<T> oldWidget) {
+  void didUpdateWidget(AsyncValueListenableBuilder<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.asyncListenable != listenable) {
       oldWidget.asyncListenable.removeListener(_changed);
@@ -100,9 +96,9 @@ class _AsyncListenableBuilderState<T extends AsyncListenable>
           );
     }
 
-    return widget.builder(
+    return widget.resultBuilder(
       context,
-      listenable,
+      listenable.requireData,
       widget.child,
     );
   }

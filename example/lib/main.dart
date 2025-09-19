@@ -35,7 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _counter = AsyncNotifier<int>(value: 0);
+  final _counter = AsyncValueNotifier<int>(data: 0);
 
   void _incrementCounter() {
     _counter.update((value) async {
@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
-            AsyncListenableBuilder(
+            AsyncValueListenableBuilder(
               asyncListenable: _counter,
               resultBuilder: (context, count, _) {
                 return Text(

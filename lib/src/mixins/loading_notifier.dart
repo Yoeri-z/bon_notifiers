@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 /// Mixin for handling loading state.
-mixin LoadingNotifier on ChangeNotifier {
+mixin LoadingNotifierMixin on ChangeNotifier {
   bool _loading = true;
 
   /// Whether the notifier is in a loading state.

@@ -2,7 +2,7 @@ import 'package:bon_notifiers/bon_notifiers.dart';
 import 'package:flutter/foundation.dart';
 
 /// Mixin for handling error state.
-mixin ErrorNotifier on ChangeNotifier {
+mixin ErrorNotifierMixin on ChangeNotifier {
   Object? _error;
 
   /// The error state of the notifier.
@@ -18,7 +18,6 @@ mixin ErrorNotifier on ChangeNotifier {
       AsyncListenable.errorListener?.call(
         message,
         error,
-        this,
         stackTrace ?? StackTrace.current,
       );
     }

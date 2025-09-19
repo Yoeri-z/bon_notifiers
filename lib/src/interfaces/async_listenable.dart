@@ -8,21 +8,15 @@ typedef WarnFunction = void Function(Object error);
 ///
 /// Typically used in state management to track and expose the state of an
 /// asynchronous operation (e.g., loading, success, error).
-abstract interface class AsyncListenable<T> extends Listenable {
+abstract interface class AsyncListenable extends Listenable {
   /// Indicates whether the asynchronous operation is currently loading.
   bool get isLoading;
 
-  /// Indicates whether a valid result is available.
-  bool get hasResult;
+  /// Indicated wether or not the notifier has data
+  bool get hasData;
 
   /// Indicates whether an error occurred during the operation.
   bool get hasError;
-
-  /// The current result, if available. May be `null` if not yet loaded or if an error occurred.
-  T? get result;
-
-  /// The current result, fails if it is not available.
-  T get requireResult;
 
   /// The error that occurred, if any. `null` if no error occurred.
   Object? get error;
@@ -30,7 +24,6 @@ abstract interface class AsyncListenable<T> extends Listenable {
   static void Function(
     String message,
     Object error,
-    ChangeNotifier notifier,
     StackTrace stackTrace,
   )? errorListener;
 }
